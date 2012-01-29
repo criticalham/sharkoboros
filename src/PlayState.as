@@ -10,7 +10,9 @@ package
 		public var player:Player;
 		public var playerBullets:FlxGroup;
 		
+		public var SoundEffect:SoundFx;
 		public var obstac:Obstac;
+		public var bground:Bground;
 		
 		public var enemies:FlxGroup;
 		public var enemyBullets:FlxGroup;
@@ -149,6 +151,12 @@ package
 			//Set the background color to light gray (0xAARRGGBB)
 			FlxG.bgColor = 0xffaaaaaa;
 			
+			/// Create sounds
+			SoundEffect = new SoundFx();
+			/// Create enviro
+			bground = new Bground();
+			add(bground);
+			
 			/// Create enviro
 			obstac = new Obstac();
 
@@ -239,11 +247,13 @@ package
 		
 		private function collidePlayerEnemies(player:Player, enemy:Enemy): void
 		{
+			SoundEffect.SoundPlayerHit();
 			player.hurt(enemy.ATK);
 		}
 		
 		private function collidePlayerEnemyBullets(player:Player, bullet:Bullet): void
 		{
+			SoundEffect.SoundPlayerHit();
 			player.hurt(bullet.ATK);
 			bullet.kill();
 		}

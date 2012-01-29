@@ -18,7 +18,7 @@ package
           {
                // super(x, y);
                loadGraphic(BackGroundSprite, true, false, FRAME_WIDTH,FRAME_HEIGHT );					//False parameteer means this is not a sprite sheet
-               scrollFactor.x = scrollFactor.y = 1.05;
+               scrollFactor.x = scrollFactor.y = 1.15;
                solid = false;  //Just to make sure no collisions with the backdrop ever take place
           }
      }
