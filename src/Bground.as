@@ -8,7 +8,7 @@ package
 	
      public class Bground extends FlxSprite
      {
-		[Embed(source = '../data/background.jpg')] private var BackGroundSprite:Class;
+		[Embed(source = '../data/background_alt.png')] private var BackGroundSprite:Class;
 		
 				/// game board info
 		public static const FRAME_WIDTH:int = 2000;
