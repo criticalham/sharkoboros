@@ -301,8 +301,22 @@ package
 			var enemy:Enemy;
 			var primaryAttribute:Class;
 			var attributeClass:Class;
+			
+			var playerSpawnPointInt:int = Math.floor(FlxG.random() * spawnPoints.length - 1);
+			var playerSpawnPoint:FlxPoint = new FlxPoint(FlxG.width/ 2, FlxG.height / 2);;
+			
+			
 			for each (spawnPoint in spawnPoints)
 			{
+				if (spawnPoints.indexOf(spawnPoint) == playerSpawnPointInt)
+				{
+					if (FlxU.getDistance(spawnPoint, player.position) > 200)
+					{
+						playerSpawnPoint = spawnPoint;
+						continue;
+					}
+				}
+				
 				primaryAttribute = PlayState.getRandomAttribute();
 				
 				for (var i:int = 0; i < 10; ++i) {
@@ -326,7 +340,7 @@ package
 					enemies.add(enemy);
 				}
 			}
-			boss = new Enemy(300, 300, enemyBullets, true);
+			boss = new Enemy(player.x, player.y, enemyBullets, true);
 			boss.addAttributes(bossAttributes);
 			addEmitter(boss, 50);
 			enemies.add(boss);
@@ -341,8 +355,17 @@ package
 			bossHealthBar.trackParent(-8, -24);
 			add(bossHealthBar);
 			
-			player.x = FlxG.width / 2;
-			player.y = FlxG.height / 2;
+			if (playerSpawnPoint != null)
+			{
+				player.x = playerSpawnPoint.x;
+				player.y = playerSpawnPoint.y;
+			}
+			else
+			{
+				player.x = FlxG.width / 2;
+				player.y = FlxG.height / 2;
+			}
+
 			player.health = Player.INITIAL_HEALTH;
 			player.addAttribute(new WeaponPistolAttribute);
 			player.color = 0xffffff;
