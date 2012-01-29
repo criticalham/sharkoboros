@@ -35,7 +35,7 @@ package
 		
 		private var direction:Number;
 		
-		private var invulnerableTimer:Number;
+		public static var invulnerableTimer:Number;
 		private var invulnerableTime:Number;
 		
 		public var EAST:Number = 0;

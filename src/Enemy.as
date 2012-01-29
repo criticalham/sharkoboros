@@ -52,7 +52,7 @@ package
 		public var maxspeed:Number;
 		
 		public var isBoss:Boolean;
-		private var shadow:BossShadow;
+		public var shadow:BossShadow;
 		
 		// what am i doing
 		// i am so tired
@@ -87,6 +87,7 @@ package
 				MAX_HP = health = INITIAL_BOSS_HEALTH;
 				shadow = new BossShadow(x, y, this);
 				FlxG.state.add(shadow);
+				color = 0x33333333;
 			}
 			else
 			{
@@ -231,8 +232,11 @@ package
 				revive();
 				if (shadow)
 				{
-					shadow.kill();
-					shadow = null;
+					var player:Player = PlayState.getPlayer();
+					shadow.x = player.x;
+					shadow.y = player.y;
+					shadow.angle = player.angle;
+					alpha = 0;
 				}
 				PlayState.win();
 			}

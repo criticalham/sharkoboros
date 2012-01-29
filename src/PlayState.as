@@ -29,6 +29,11 @@ package
 		public static const SPAWN_RANGE:Number = 100;
 		private var spawnPoints:Array;
 		
+		public static const RESTART_TIME:Number = 4;
+		public static var restartTime:Number = 0;
+		public static var restarting:Boolean = false;
+		public static var fadeValue:Number = 0;
+		
 		[Embed(source = '../data/particle.png')] private var ImgParticle:Class;
 		
 		public static function getRandomAttribute():Class
@@ -58,8 +63,20 @@ package
 		
 		public static function win():void
 		{
-			return PlayState(FlxG.state).resetLevel(true);
+			var player:Player = getPlayer();
+			Player.invulnerableTimer = RESTART_TIME;
+
+			restartTime = RESTART_TIME;
+			restarting = true;
+			fadeValue = 0;
+			player.color = 0x030303;
+			
+			var boss:Enemy = getBoss();
+			boss.shadow.alpha = 0;
+		
+			//return PlayState(FlxG.state).resetLevel(true);
 		}
+		
 		
 		public static function lose():void
 		{
@@ -69,6 +86,11 @@ package
 		public static function getPlayer():Player
 		{
 			return PlayState(FlxG.state).player;
+		}
+				
+		public static function getBoss():Enemy
+		{
+			return PlayState(FlxG.state).boss;
 		}
 		
 		public static function dropText(x:Number, y:Number, text:String):void
@@ -107,6 +129,8 @@ package
 		
 		override public function create():void
 		{
+			restartTime = 0;
+			restarting = false;
 			spawnPoints = new Array();
 			spawnPoints.push(new FlxPoint(429, 1562));
 			spawnPoints.push(new FlxPoint(344, 999));
@@ -172,23 +196,44 @@ package
 		
 		override public function update():void
 		{
-			FlxG.collide(player, enemies, collidePlayerEnemies);
-			FlxG.collide(playerBullets, enemies, collidePlayerBulletsEnemies);
-			FlxG.overlap(player, enemyBullets, collidePlayerEnemyBullets);
-			FlxG.collide(player, items, collidePlayerItems);
-			FlxG.collide(enemies, enemies);
-			
-			FlxG.collide(player, obstac);
-			FlxG.collide(enemies, obstac);
-			
-			//Updates all the objects appropriately
-			super.update();
-			
-			debugText.text = player.DEF.toString();
-			
-			if (FlxG.keys.SPACE)
+			if (!restarting)
 			{
-				trace(debugText.text);
+				FlxG.collide(player, enemies, collidePlayerEnemies);
+				FlxG.collide(playerBullets, enemies, collidePlayerBulletsEnemies);
+				FlxG.overlap(player, enemyBullets, collidePlayerEnemyBullets);
+				FlxG.collide(player, items, collidePlayerItems);
+				FlxG.collide(enemies, enemies);
+				
+				FlxG.collide(player, obstac);
+				FlxG.collide(enemies, obstac);
+				
+				//Updates all the objects appropriately
+				super.update();
+				
+				debugText.text = player.DEF.toString();
+				
+				if (FlxG.keys.SPACE)
+				{
+					trace(debugText.text);
+				}
+			}
+			else
+			{
+				boss.visible = false;
+				bossHealthBar.visible = false;
+				
+				fadeValue += FlxG.elapsed / RESTART_TIME;
+				player.color -= 0x010101
+				
+				boss.shadow.alpha = 0.32 * ((RESTART_TIME - restartTime) / RESTART_TIME);
+				boss.shadow.angle = player.angle;
+				boss.shadow.x = player.x;
+				boss.shadow.y = player.y;
+				restartTime -= FlxG.elapsed;
+				if (restartTime <= 0)
+				{
+					resetLevel();
+				}
 			}
 		}
 		
@@ -220,6 +265,12 @@ package
 		
 		public function resetLevel(advanceLevel:Boolean = false):void
 		{
+			restartTime = 0;
+			restarting = false;
+			
+			emitters.clear();
+			addEmitter(player, 50);
+			
 			var bossAttributes:Array = new Array();
 			if (boss != null)
 			{
@@ -284,6 +335,7 @@ package
 			player.y = FlxG.height / 2;
 			player.health = Player.INITIAL_HEALTH;
 			player.addAttribute(new WeaponPistolAttribute);
+			player.color = 0xffffff;
 			//player.wpnTerrible = new Weapon(player, player.bulletGroup, 4, 200, 200, 30, 1);
 			//player.weapons.add(player.wpnTerrible);
 			hud.update();
