@@ -16,9 +16,13 @@ package
 		[Embed(source = '../data/item_def.png')] private var ImgItemDEF:Class;
 		[Embed(source = '../data/item_spd.png')] private var ImgItemSPD:Class;
 		[Embed(source = '../data/item_regen.png')] private var ImgItemRegen:Class;
+		[Embed(source = '../data/item_atk_down.png')] private var ImgItemATKDown:Class;
+		[Embed(source = '../data/item_def_down.png')] private var ImgItemDEFDown:Class;
+		[Embed(source = '../data/item_spd_down.png')] private var ImgItemSPDDown:Class;
+		[Embed(source = '../data/item_regen_down.png')] private var ImgItemRegenDown:Class;
 		[Embed(source = '../data/item_bubble.png')] private var ImgItemBubble:Class;
 		
-		public function Item(x:Number, y:Number) 
+		public function Item(x:Number, y:Number)
 		{
 			super(x, y);
 		}
@@ -54,19 +58,47 @@ package
 			// Only called after an item's attributes change (probably only immediately after creation)
 			if (imageType == Attribute.ATT_ATK)
 			{
-				loadGraphic(ImgItemATK);
+				if (isDebuff)
+				{
+					loadGraphic(ImgItemATKDown);
+				}
+				else
+				{
+					loadGraphic(ImgItemATK);
+				}
 			}
 			else if (imageType == Attribute.ATT_SPD)
 			{
-				loadGraphic(ImgItemSPD);
+				if (isDebuff)
+				{
+					loadGraphic(ImgItemSPDDown);
+				}
+				else
+				{
+					loadGraphic(ImgItemSPD);
+				}
 			}
 			else if (imageType == Attribute.ATT_DEF)
 			{
-				loadGraphic(ImgItemDEF);
+				if (isDebuff)
+				{
+					loadGraphic(ImgItemDEFDown);
+				}
+				else
+				{
+					loadGraphic(ImgItemDEF);
+				}
 			}
 			else if (imageType == Attribute.ATT_REGEN)
 			{
-				loadGraphic(ImgItemRegen);
+				if (isDebuff)
+				{
+					loadGraphic(ImgItemRegenDown);
+				}
+				else
+				{
+					loadGraphic(ImgItemRegen);
+				}
 			}
 			else if (imageType == Attribute.ATT_PISTOL)
 			{
@@ -83,10 +115,6 @@ package
 			else if (imageType == Attribute.ATT_BUBBLE)
 			{
 				loadGraphic(ImgItemBubble);
-			}
-			if (isDebuff)
-			{
-				color = 0x333333;
 			}
 		}
 	}
