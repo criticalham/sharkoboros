@@ -64,6 +64,9 @@ package
 		public var evenOddFlag:Boolean;
 		public var turnSpeed:Number = 1.0;
 		
+		/// sound effects
+		public var SoundEffect:SoundFx;
+		
 		// Current state
 		private var currentState:Function;
 		
@@ -75,6 +78,9 @@ package
 		 */
 		public function Enemy(X:Number, Y:Number, bulletGroup:FlxGroup, boss:Boolean = false): void
 		{
+			
+			SoundEffect = new SoundFx();
+			
 			isBoss = boss;
 			super(X, Y);
 			
@@ -219,6 +225,13 @@ package
 		
 		public override function hurt(damage:Number): void
 		{
+			/// do impact sound
+			if (isBoss){
+				SoundEffect.SoundBossHit();
+				
+			} else {
+				SoundEffect.SoundEnemyHit();
+			}
 			super.hurt(damage / DEF);
 			blinkTimer = BLINK_TIME;
 		}
