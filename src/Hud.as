@@ -63,13 +63,13 @@ package
 			var itr:Number = 0;
 			for (itr = 0; itr <= Attribute.LAST; itr++)
 			{
-				if (attributeValues[itr] != 0)
+				if (true)
 				{
-					var itemIcon:Item = new Item(16 + i * 32, 35);
+					var itemIcon:Item = new Item(16 + i * 42, 35);
 					itemIcon.updateImage(itr);
 					itemIcon.scrollFactor = new FlxPoint(0, 0);
 					grpItems.add(itemIcon);
-					var itemText:FlxText = new FlxText(16 + 16 + i * 32, 35, 32);
+					var itemText:FlxText = new FlxText(16 + 24 + i * 42, 38, 32);
 					var attCount:Number = attributeValues[itr];
 					itemText.text = attCount.toString();
 					itemText.size = 8;

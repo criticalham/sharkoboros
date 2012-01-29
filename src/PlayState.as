@@ -245,7 +245,7 @@ package
 				restartTime -= FlxG.elapsed;
 				if (restartTime <= 0)
 				{
-					resetLevel();
+					resetLevel(true);
 				}
 			}
 		}
