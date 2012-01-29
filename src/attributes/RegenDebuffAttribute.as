@@ -18,7 +18,7 @@ package attributes
 		
 		override public function get name():String
 		{
-			return "REGEN UP";
+			return "REGEN DOWN...";
 		}
 		
 		override public function onAdd(character:Character):void

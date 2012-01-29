@@ -18,7 +18,7 @@ package attributes
 		
 		override public function get name():String
 		{
-			return "SPEED UP";
+			return "SPEED DOWN...";
 		}
 		
 		override public function onAdd(character:Character):void

@@ -27,6 +27,11 @@ package
 		[Embed(source = '../data/fish_gray.png')] private var GraySprite:Class;
 		[Embed(source = '../data/shark_boss.png')] private var BossImgSprite:Class;
 		
+		[Embed(source = '../data/fish_red_x.png')] private var RedXSprite:Class;
+		[Embed(source = '../data/fish_green_x.png')] private var GreenXSprite:Class;
+		[Embed(source = '../data/fish_blue_x.png')] private var BlueXSprite:Class;
+		[Embed(source = '../data/fish_pink_x.png')] private var PinkXSprite:Class;
+		
 		// SPRITE INFO
 		public static const FRAME_WIDTH:int = 40;
 		public static const FRAME_HEIGHT:int = 40;
@@ -150,8 +155,7 @@ package
 				}
 				else if (attribute is AttackDebuffAttribute)
 				{
-					loadGraphic(RedSprite, true, false, SPRITE_WIDTH, SPRITE_HEIGHT);
-					alpha = 0.5;
+					loadGraphic(RedXSprite, true, false, SPRITE_WIDTH, SPRITE_HEIGHT);
 				}
 				else if (attribute is DefenseAttribute)
 				{
@@ -159,8 +163,7 @@ package
 				}
 				else if (attribute is DefenseDebuffAttribute)
 				{
-					loadGraphic(BlueSprite, true, false, SPRITE_WIDTH, SPRITE_HEIGHT);
-					alpha = 0.5;
+					loadGraphic(BlueXSprite, true, false, SPRITE_WIDTH, SPRITE_HEIGHT);
 				}
 				else if (attribute is RegenAttribute)
 				{
@@ -168,8 +171,7 @@ package
 				}
 				else if (attribute is RegenDebuffAttribute)
 				{
-					loadGraphic(PinkSprite, true, false, SPRITE_WIDTH, SPRITE_HEIGHT);
-					alpha = 0.5;
+					loadGraphic(PinkXSprite, true, false, SPRITE_WIDTH, SPRITE_HEIGHT);
 				}
 				else if (attribute is SpeedAttribute)
 				{
@@ -177,16 +179,15 @@ package
 				}
 				else if (attribute is SpeedDebuffAttribute)
 				{
-					loadGraphic(GreenSprite, true, false, SPRITE_WIDTH, SPRITE_HEIGHT);
-					alpha = 0.5;
+					loadGraphic(GreenXSprite, true, false, SPRITE_WIDTH, SPRITE_HEIGHT);
 				}
 				else if (attribute is WeaponPistolAttribute)
 				{
-					loadGraphic(BrownSprite, true, false, SPRITE_WIDTH, SPRITE_HEIGHT);
+					loadGraphic(OrangeSprite, true, false, SPRITE_WIDTH, SPRITE_HEIGHT);
 				}
 				else if (attribute is WeaponRearAttribute)
 				{
-					loadGraphic(TealSprite, true, false, SPRITE_WIDTH, SPRITE_HEIGHT);
+					loadGraphic(YellowSprite, true, false, SPRITE_WIDTH, SPRITE_HEIGHT);
 				}
 				else if (attribute is WeaponSideAttribute)
 				{
