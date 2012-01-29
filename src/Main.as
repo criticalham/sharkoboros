@@ -7,7 +7,8 @@ package
 		public function Main()
 		{
 			trace("Hello World");
-			super(640,480,PlayState,1);
+			super(640, 480, PlayState, 1);
+			forceDebugger = true;
 		}
 	}
 }

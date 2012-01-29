@@ -15,18 +15,24 @@ package
 	 */
 	public class Enemy extends Character
 	{
-		[Embed(source = '../data/shark_red.png')] private var RedSprite:Class;
-		[Embed(source = '../data/shark_orange.png')] private var OrangeSprite:Class;
-		[Embed(source = '../data/shark_yellow.png')] private var YellowSprite:Class;
-		[Embed(source = '../data/shark_green.png')] private var GreenSprite:Class;
-		[Embed(source = '../data/shark_purple.png')] private var PurpleSprite:Class;
-		[Embed(source = '../data/shark_brown.png')] private var BrownSprite:Class;
-		[Embed(source = '../data/shark_pink.png')] private var PinkSprite:Class;
+		[Embed(source = '../data/fish_red.png')] private var RedSprite:Class;
+		[Embed(source = '../data/fish_orange.png')] private var OrangeSprite:Class;
+		[Embed(source = '../data/fish_yellow.png')] private var YellowSprite:Class;
+		[Embed(source = '../data/fish_green.png')] private var GreenSprite:Class;
+		[Embed(source = '../data/fish_blue.png')] private var BlueSprite:Class;
+		[Embed(source = '../data/fish_teal.png')] private var TealSprite:Class;
+		[Embed(source = '../data/fish_purple.png')] private var PurpleSprite:Class;
+		[Embed(source = '../data/fish_pink.png')] private var PinkSprite:Class;
+		[Embed(source = '../data/fish_brown.png')] private var BrownSprite:Class;
+		[Embed(source = '../data/fish_gray.png')] private var GraySprite:Class;
 		[Embed(source = '../data/shark_boss.png')] private var BossImgSprite:Class;
 		
 		// SPRITE INFO
 		public static const FRAME_WIDTH:int = 40;
 		public static const FRAME_HEIGHT:int = 40;
+		public static const SPRITE_WIDTH:int = 20;
+		public static const SPRITE_HEIGHT:int = 20;
+		public static const SPRITE_SCALE:Number = 2.0;
 		
 		// DEFAULT STATS
 		public static const DEFAULT_SPEED:Number = 50;
@@ -67,23 +73,29 @@ package
 			isBoss = boss;
 			super(X, Y);
 			
-			angle = Math.random() * 360;
-			
-			loadGraphic(BossImgSprite, true, false, FRAME_WIDTH, FRAME_HEIGHT);
+			angle = Math.random() * 360;		
 
 			if (isBoss)
 			{
+				loadGraphic(BossImgSprite, true, false, Player.SPRITE_WIDTH, Player.SPRITE_HEIGHT);
+				scale.x = SPRITE_SCALE;
+				scale.y = SPRITE_SCALE;
+				width = Player.FRAME_WIDTH;
+				height = Player.FRAME_HEIGHT;
+				//offset.x = Player.SPRITE_WIDTH;
+				//offset.y = Player.SPRITE_HEIGHT;
 				MAX_HP = health = INITIAL_BOSS_HEALTH;
 				shadow = new BossShadow(x, y, this);
 				FlxG.state.add(shadow);
 			}
 			else
 			{
+				loadGraphic(GraySprite, true, false, SPRITE_WIDTH, SPRITE_HEIGHT);
 				MAX_HP = health = INITIAL_HEALTH;
 			}
 			
-			addAnimation("default", [0]);
-			addAnimation("hurt", [0,1], 30);
+			addAnimation("default", [0,1,0,2], 10);
+			addAnimation("hurt", [3,4,3,5], 10);
 			
 			SPEED = DEFAULT_SPEED;
 			maxspeed = DEFAULT_MAX_SPEED;
@@ -134,57 +146,62 @@ package
 			{
 				if (attribute is AttackAttribute)
 				{
-					loadGraphic(RedSprite, true, false, FRAME_WIDTH, FRAME_HEIGHT);
+					loadGraphic(RedSprite, true, false, SPRITE_WIDTH, SPRITE_HEIGHT);
 				}
 				else if (attribute is AttackDebuffAttribute)
 				{
-					loadGraphic(RedSprite, true, false, FRAME_WIDTH, FRAME_HEIGHT);
+					loadGraphic(RedSprite, true, false, SPRITE_WIDTH, SPRITE_HEIGHT);
 					alpha = 0.5;
 				}
 				else if (attribute is DefenseAttribute)
 				{
-					loadGraphic(PurpleSprite, true, false, FRAME_WIDTH, FRAME_HEIGHT);
+					loadGraphic(BlueSprite, true, false, SPRITE_WIDTH, SPRITE_HEIGHT);
 				}
 				else if (attribute is DefenseDebuffAttribute)
 				{
-					loadGraphic(PurpleSprite, true, false, FRAME_WIDTH, FRAME_HEIGHT);
+					loadGraphic(BlueSprite, true, false, SPRITE_WIDTH, SPRITE_HEIGHT);
 					alpha = 0.5;
 				}
 				else if (attribute is RegenAttribute)
 				{
-					loadGraphic(OrangeSprite, true, false, FRAME_WIDTH, FRAME_HEIGHT);
+					loadGraphic(PinkSprite, true, false, SPRITE_WIDTH, SPRITE_HEIGHT);
 				}
 				else if (attribute is RegenDebuffAttribute)
 				{
-					loadGraphic(OrangeSprite, true, false, FRAME_WIDTH, FRAME_HEIGHT);
+					loadGraphic(PinkSprite, true, false, SPRITE_WIDTH, SPRITE_HEIGHT);
 					alpha = 0.5;
 				}
 				else if (attribute is SpeedAttribute)
 				{
-					loadGraphic(GreenSprite, true, false, FRAME_WIDTH, FRAME_HEIGHT);
+					loadGraphic(GreenSprite, true, false, SPRITE_WIDTH, SPRITE_HEIGHT);
 				}
 				else if (attribute is SpeedDebuffAttribute)
 				{
-					loadGraphic(GreenSprite, true, false, FRAME_WIDTH, FRAME_HEIGHT);
+					loadGraphic(GreenSprite, true, false, SPRITE_WIDTH, SPRITE_HEIGHT);
 					alpha = 0.5;
 				}
 				else if (attribute is WeaponPistolAttribute)
 				{
-					loadGraphic(YellowSprite, true, false, FRAME_WIDTH, FRAME_HEIGHT);
+					loadGraphic(BrownSprite, true, false, SPRITE_WIDTH, SPRITE_HEIGHT);
 				}
 				else if (attribute is WeaponRearAttribute)
 				{
-					loadGraphic(BrownSprite, true, false, FRAME_WIDTH, FRAME_HEIGHT);
+					loadGraphic(TealSprite, true, false, SPRITE_WIDTH, SPRITE_HEIGHT);
 				}
 				else if (attribute is WeaponSideAttribute)
 				{
-					loadGraphic(PinkSprite, true, false, FRAME_WIDTH, FRAME_HEIGHT);
+					loadGraphic(TealSprite, true, false, SPRITE_WIDTH, SPRITE_HEIGHT);
 				}
 				else if (attribute is attributes.WeaponBubbleAttribute)
 				{
-					// TODO real Bubble enemy art
-					loadGraphic(PinkSprite, true, false, FRAME_WIDTH, FRAME_HEIGHT);
+					loadGraphic(PurpleSprite, true, false, SPRITE_WIDTH, SPRITE_HEIGHT);
 				}
+				scale.x = SPRITE_SCALE;
+				scale.y = SPRITE_SCALE;
+				width = FRAME_WIDTH;
+				height = FRAME_HEIGHT;
+				offset.x = -SPRITE_WIDTH/2;
+				offset.y = -SPRITE_HEIGHT/2;
 			}
 			super.addAttribute(attribute);
 		}
@@ -376,7 +393,7 @@ package
 				{
 					var weapon:Weapon = weapons.members[i];
 					weapon.update();
-					weapon.fireAngle(angle, 0, 0);
+					weapon.fireAngle(angle, -offset.x, -offset.y);
 				}
 			}
 		}

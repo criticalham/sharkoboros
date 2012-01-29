@@ -24,6 +24,9 @@ package
 		
 		public static const FRAME_WIDTH:int = 40;
 		public static const FRAME_HEIGHT:int = 40;
+		public static const SPRITE_WIDTH:int = 30;
+		public static const SPRITE_HEIGHT:int = 20;
+		public static const SPRITE_SCALE:Number = 2.0;
 		
 		public static const INITIAL_SPEED:Number = 150;
 		public static const INITIAL_HEALTH:int = 100;
@@ -49,9 +52,14 @@ package
 		public function Player(X:Number, Y:Number, bulletGroup:FlxGroup): void
 		{
 			super(X, Y);
-			loadGraphic(ImgSprite, true, false, FRAME_WIDTH, FRAME_HEIGHT);
-			addAnimation("default", [0]);
-			addAnimation("hurt", [0,1], 30);
+			loadGraphic(ImgSprite, true, false, SPRITE_WIDTH, SPRITE_HEIGHT);
+			scale.x = SPRITE_SCALE;
+			scale.y = SPRITE_SCALE;
+			width = SPRITE_WIDTH;
+			height = SPRITE_HEIGHT;
+			
+			addAnimation("default", [0,1,0,2], 10);
+			addAnimation("hurt", [3, 4, 3, 5], 10);
 			
 			SPEED = INITIAL_SPEED;
 			MAX_HP = health = INITIAL_HEALTH;
@@ -157,7 +165,7 @@ package
 				{
 					var weapon:Weapon = weapons.members[i];
 					weapon.update();
-					weapon.fireVector(direction, 0, 0);
+					weapon.fireVector(direction, -offset.x, -offset.y);
 				}
 			}
 		}

@@ -14,7 +14,9 @@ package
 		public function BossShadow(x:Number, y:Number, boss:FlxSprite) 
 		{
 			this.boss = boss;
-			loadGraphic(BossImgSprite, false, false, 40, 40);
+			loadGraphic(BossImgSprite, false, false, Player.SPRITE_WIDTH, Player.SPRITE_HEIGHT);
+			addAnimation("default", [0, 1, 0, 2], 2);
+			play("default");
 			
 			color = 0x000000;
 			alpha = 0.32;
