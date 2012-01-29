@@ -86,9 +86,8 @@ package
 			group.add(object);
 		}
 		
-		public function addEmitter(character:Character): void
+		public function addEmitter(character:Character, particles:Number = 10 ): void
 		{
-			var particles:int = 30;
 			var emitter:FlxEmitter = new FlxEmitter(character.x + character.width / 2, character.y + character.height / 2, particles); //x and y of the emitter
 			var particle:FlxParticle;
 			 
@@ -98,9 +97,8 @@ package
 				particle.makeGraphic(3, 3);
 				emitter.add(particle);
 			}
-
 			
-			add(emitter);
+			emitters.add(emitter);
 			character.setEmitter(emitter);
 			emitter.setXSpeed(-30, 30);
 			emitter.setYSpeed(-30, 30);
@@ -129,17 +127,15 @@ package
 			
 			/// Create enviro
 			obstac = new Obstac();
-			add(obstac);
+
+			emitters = new FlxGroup;
 			
 			//Create player
 			playerBullets = new FlxGroup();
 			player = new Player(FlxG.width/2, FlxG.height/2, playerBullets);
-			add(player);
-			add(playerBullets);
-			addEmitter(player);
+			addEmitter(player, 50);
 			
 			var hudGroup:FlxGroup = new FlxGroup;
-			add(hudGroup);
 			hud = new Hud(hudGroup, player);
 			
 			FlxG.camera.follow(player, FlxCamera.STYLE_TOPDOWN);
@@ -147,20 +143,28 @@ package
 			// Create health barwd
 			healthBar = new FlxBar(16, 64, FlxBar.FILL_LEFT_TO_RIGHT, 64, 8, player, "health");
 			healthBar.trackParent(0, -24);
-			add(healthBar);
+
 			
 			enemies = new FlxGroup();
 			enemyBullets = new FlxGroup();
-			
-			add(enemies);
-			add(enemyBullets);
+
 			
 			items = new FlxGroup;
-			add(items);
+
 			
 			debugText = new FlxText(0, 100, 400, "");
 			debugText.scrollFactor.x = 0;
 			debugText.scrollFactor.y = 0;
+			
+			add(obstac);
+			add(emitters);
+			add(items);
+			add(enemies);
+			add(enemyBullets);
+			add(player);
+			add(playerBullets);	
+			add(healthBar);	
+			add(hudGroup);
 			add(debugText);
 			
 			resetLevel();
@@ -257,11 +261,13 @@ package
 						enemy.addAttribute(new primaryAttribute);
 						primaryAttribute = attributeClass;
 					}
+					//addEmitter(enemy);
 					enemies.add(enemy);
 				}
 			}
 			boss = new Enemy(300, 300, enemyBullets, true);
 			boss.addAttributes(bossAttributes);
+			addEmitter(boss, 50);
 			enemies.add(boss);
 			
 			// Create boss health bar
