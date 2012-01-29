@@ -149,7 +149,7 @@ package
 			FlxG.worldBounds = new FlxRect(0, 0, 2000,2000);
 			
 			//Set the background color to light gray (0xAARRGGBB)
-			FlxG.bgColor = 0xffaaaaaa;
+			FlxG.bgColor = 0xff000000;
 			
 			/// Create sounds
 			SoundEffect = new SoundFx();
@@ -260,12 +260,17 @@ package
 		
 		private function collidePlayerBulletsEnemies(bullet:Bullet, enemy:Enemy): void
 		{
+			
+			/// put sound with the enemy
+			/// so it will change
+			/// if it's the boss
 			enemy.hurt(bullet.ATK);
 			bullet.kill();
 		}
 		
 		private function collidePlayerItems(player:Player, item:Item): void
 		{
+			SoundEffect.SoundPowerUpLong();
 			item.dropAttributeText();
 			player.copyAttributes(item);
 			item.kill();
