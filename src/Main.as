@@ -6,7 +6,9 @@ package
 	{
 		public function Main()
 		{
-			super(640,480,MenuState,1);
+			trace("Hello World");
+			super(640, 480, MenuState, 1);
+			forceDebugger = true;
 		}
 	}
 }
