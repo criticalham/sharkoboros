@@ -4,6 +4,7 @@ package
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxG;
+	import org.flixel.FlxEmitter;
 	import attributes.Attribute;
 	/**
 	 * ...
@@ -42,6 +43,9 @@ package
 		public var regenTimer:Number;
 		private const regenAmount:Number = 1;
 		
+		public var emitter:FlxEmitter;
+		
+		
 		/**
 		 * Constructor
 		 * 
@@ -56,6 +60,7 @@ package
 			weapons = new FlxGroup();
 			regenTimer = 0;
 			REGEN = 0;
+			emitter = null;
 		}
 		
 		public function dropItem():void
@@ -116,6 +121,11 @@ package
 			}
 			
 			updateRegen();
+			if (emitter != null)
+			{
+				emitter.x = x + width / 2;
+				emitter.y = y + height / 2;
+			}
 			
 			super.update();
 		}
@@ -175,6 +185,21 @@ package
 			// It'll do for now.
 			(attributes as Array).splice((attributes as Array).indexOf(attribute), 1);
 			attribute.onRemove(this);
+		}
+		
+		public function setEmitter(emitter:FlxEmitter):void
+		{
+			this.emitter = emitter;
+		}
+		
+		override public function kill():void 
+		{
+			if (emitter != null)
+			{
+				emitter.destroy();
+			}
+			
+			super.kill();
 		}
 	}
 

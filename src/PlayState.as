@@ -18,6 +18,7 @@ package
 		public var boss:Enemy;
 		
 		public static var items:FlxGroup;
+		public var emitters:FlxGroup;
 		
 		private var healthBar:FlxBar;
 		private var bossHealthBar:FlxBar;
@@ -27,6 +28,8 @@ package
 		
 		public static const SPAWN_RANGE:Number = 100;
 		private var spawnPoints:Array;
+		
+		[Embed(source = '../data/particle.png')] private var ImgParticle:Class;
 		
 		public static function getRandomAttribute():Class
 		{
@@ -83,6 +86,27 @@ package
 			group.add(object);
 		}
 		
+		public function addEmitter(character:Character): void
+		{
+			var particles:int = 30;
+			var emitter:FlxEmitter = new FlxEmitter(character.x + character.width / 2, character.y + character.height / 2, particles); //x and y of the emitter
+			var particle:FlxParticle;
+			 
+			for(var i:int = 0; i < particles; i++)
+			{
+				particle = new FlxParticle();
+				particle.makeGraphic(3, 3);
+				emitter.add(particle);
+			}
+
+			
+			add(emitter);
+			character.setEmitter(emitter);
+			emitter.setXSpeed(-30, 30);
+			emitter.setYSpeed(-30, 30);
+			emitter.start(false, 0.3, 0.02, 0);
+		}
+		
 		override public function create():void
 		{
 			spawnPoints = new Array();
@@ -112,6 +136,7 @@ package
 			player = new Player(FlxG.width/2, FlxG.height/2, playerBullets);
 			add(player);
 			add(playerBullets);
+			addEmitter(player);
 			
 			var hudGroup:FlxGroup = new FlxGroup;
 			add(hudGroup);
