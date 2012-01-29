@@ -252,6 +252,11 @@ package
 					shadow.angle = player.angle;
 					alpha = 0;
 				}
+				
+				var hud:Hud = PlayState(FlxG.state).hud;
+				hud.generationNum++;
+				hud.generationCounter.text = hud.generationNum.toString();
+				
 				PlayState.win();
 			}
 			else

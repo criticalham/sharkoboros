@@ -26,7 +26,7 @@ package
 		private var bossHealthBar:FlxBar;
 		
 		private var debugText:FlxText;
-		private var hud:Hud;
+		public var hud:Hud;
 		
 		public static const SPAWN_RANGE:Number = 100;
 		private var spawnPoints:Array;
@@ -83,6 +83,7 @@ package
 		public static function lose():void
 		{
 			return PlayState(FlxG.state).resetLevel(false);
+			
 		}
 		
 		public static function getPlayer():Player
@@ -131,6 +132,12 @@ package
 		
 		override public function create():void
 		{
+			
+			/// Create sounds
+			SoundEffect = new SoundFx();
+					/// intro sound
+			SoundEffect.SoundHorns();
+			/// 
 			restartTime = 0;
 			restarting = false;
 			spawnPoints = new Array();
@@ -150,9 +157,7 @@ package
 			
 			//Set the background color to light gray (0xAARRGGBB)
 			FlxG.bgColor = 0xff000000;
-			
-			/// Create sounds
-			SoundEffect = new SoundFx();
+	
 			/// Create enviro
 			bground = new Bground();
 			add(bground);
@@ -199,7 +204,7 @@ package
 			add(hudGroup);
 			add(debugText);
 			
-			resetLevel();
+			resetLevel(true);
 		}
 		
 		override public function update():void
@@ -280,6 +285,10 @@ package
 		
 		public function resetLevel(advanceLevel:Boolean = false):void
 		{
+			if(advanceLevel == false){
+				SoundEffect.SoundHonk();
+			}
+			
 			restartTime = 0;
 			restarting = false;
 			
@@ -306,22 +315,8 @@ package
 			var enemy:Enemy;
 			var primaryAttribute:Class;
 			var attributeClass:Class;
-			
-			var playerSpawnPointInt:int = Math.floor(FlxG.random() * spawnPoints.length - 1);
-			var playerSpawnPoint:FlxPoint = new FlxPoint(FlxG.width/ 2, FlxG.height / 2);;
-			
-			
 			for each (spawnPoint in spawnPoints)
 			{
-				if (spawnPoints.indexOf(spawnPoint) == playerSpawnPointInt)
-				{
-					if (FlxU.getDistance(spawnPoint, player.position) > 200)
-					{
-						playerSpawnPoint = spawnPoint;
-						continue;
-					}
-				}
-				
 				primaryAttribute = PlayState.getRandomAttribute();
 				
 				for (var i:int = 0; i < 10; ++i) {
@@ -345,7 +340,7 @@ package
 					enemies.add(enemy);
 				}
 			}
-			boss = new Enemy(player.x, player.y, enemyBullets, true);
+			boss = new Enemy(300, 300, enemyBullets, true);
 			boss.addAttributes(bossAttributes);
 			addEmitter(boss, 50);
 			enemies.add(boss);
@@ -360,17 +355,8 @@ package
 			bossHealthBar.trackParent(-8, -24);
 			add(bossHealthBar);
 			
-			if (playerSpawnPoint != null)
-			{
-				player.x = playerSpawnPoint.x;
-				player.y = playerSpawnPoint.y;
-			}
-			else
-			{
-				player.x = FlxG.width / 2;
-				player.y = FlxG.height / 2;
-			}
-
+			player.x = FlxG.width / 2;
+			player.y = FlxG.height / 2;
 			player.health = Player.INITIAL_HEALTH;
 			player.addAttribute(new WeaponPistolAttribute);
 			player.color = 0xffffff;
