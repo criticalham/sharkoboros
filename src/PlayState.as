@@ -26,7 +26,7 @@ package
 		private var bossHealthBar:FlxBar;
 		
 		private var debugText:FlxText;
-		private var hud:Hud;
+		public var hud:Hud;
 		
 		public static const SPAWN_RANGE:Number = 100;
 		private var spawnPoints:Array;
