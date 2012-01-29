@@ -15,6 +15,7 @@ package
 		public var subTitle:FlxText;
 		public var instruction:FlxText;
 		public var instruction2:FlxText;
+		public var credits:FlxText;
 		
 		public function MenuState(): void
 		{
@@ -88,6 +89,11 @@ package
 			instruction = new FlxText(0, FlxG.height - 128, FlxG.width, text, false);
 			instruction.setFormat("Arial Black", 12, 0x666666, "center", 0);
 			add(instruction);
+			
+			
+			subTitle = new FlxText(0, FlxG.height - 16, FlxG.width, "© 2012 Doug Macdonald, Jason Hamilton, and Eric Medine", false);
+			subTitle.setFormat("Arial", 10, 0x666666, "left", 0);
+			add(subTitle);
 		}
 		
 		override public function update(): void
