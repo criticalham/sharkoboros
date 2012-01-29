@@ -25,7 +25,6 @@ package
 		private var healthBar:FlxBar;
 		private var bossHealthBar:FlxBar;
 		
-		private var debugText:FlxText;
 		public var hud:Hud;
 		
 		public static const SPAWN_RANGE:Number = 100;
@@ -189,11 +188,6 @@ package
 
 			
 			items = new FlxGroup;
-
-			
-			debugText = new FlxText(0, 100, 400, "");
-			debugText.scrollFactor.x = 0;
-			debugText.scrollFactor.y = 0;
 			
 			add(obstac);
 			add(emitters);
@@ -204,8 +198,7 @@ package
 			add(playerBullets);	
 			add(healthBar);	
 			add(hudGroup);
-			add(debugText);
-			
+
 			resetLevel(true);
 		}
 		
@@ -225,12 +218,6 @@ package
 				//Updates all the objects appropriately
 				super.update();
 				
-				debugText.text = player.DEF.toString();
-				
-				if (FlxG.keys.SPACE)
-				{
-					trace(debugText.text);
-				}
 			}
 			else
 			{

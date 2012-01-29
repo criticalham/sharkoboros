@@ -110,10 +110,6 @@ package
 			updateSpeed();
 			shoot();
 			
-			if (FlxG.keys.SIX)
-			{
-				addAttribute(new attributes.WeaponBubbleAttribute);
-			}
 			if (acceleration.x != 0 || acceleration.y != 0)
 			{
 				angle = FlxU.getAngle(velocity, new FlxPoint(0, 0)) + 90;
