@@ -15,7 +15,7 @@ package
 		[Embed(source="../data/sound/blip.mp3")] private var BlipSoundSfx:Class;
 		[Embed(source="../data/sound/powerup_long.mp3")] private var PowerUpLongSfx:Class;
 		[Embed(source="../data/sound/Honk_sad.mp3")] private var HonkSadSfx:Class;
-		[Embed(source="../data/sound/horn_intro_mono.mp3")] private var IntroSoundSfx:Class;
+		[Embed(source="../data/sound/startup.mp3")] private var IntroSoundSfx:Class;
 
 		
           public function SoundFx()
