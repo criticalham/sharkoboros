@@ -10,7 +10,7 @@ package
 		public var player:Player;
 		public var playerBullets:FlxGroup;
 		
-		public var SoundEffect:SoundFx;
+		public static var SoundEffect:SoundFx;
 		public var obstac:Obstac;
 		public var bground:Bground;
 		
@@ -75,7 +75,9 @@ package
 			
 			var boss:Enemy = getBoss();
 			boss.shadow.alpha = 0;
-		
+			
+			SoundEffect.SoundWin();
+			
 			//return PlayState(FlxG.state).resetLevel(true);
 		}
 		

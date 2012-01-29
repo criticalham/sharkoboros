@@ -16,7 +16,7 @@ package
 		[Embed(source="../data/sound/powerup_long.mp3")] private var PowerUpLongSfx:Class;
 		[Embed(source="../data/sound/die.mp3")] private var HonkSadSfx:Class;
 		[Embed(source="../data/sound/startup.mp3")] private var IntroSoundSfx:Class;
-
+		[Embed(source="../data/sound/win.mp3")] private var WinSfx:Class;
 		
           public function SoundFx()
           {
@@ -54,6 +54,10 @@ package
 		  public function SoundHorns():void{
 			
 				FlxG.play(IntroSoundSfx);
+		  }
+		  public function SoundWin():void{
+			
+				FlxG.play(WinSfx);
 		  }
 		  
 //////////////////		  
