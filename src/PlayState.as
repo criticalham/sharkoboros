@@ -132,7 +132,7 @@ package
 		
 		override public function create():void
 		{
-			
+			FlxG.volume = 0.5;
 			/// Create sounds
 			SoundEffect = new SoundFx();
 					/// intro sound

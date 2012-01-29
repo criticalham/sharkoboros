@@ -20,7 +20,6 @@ package
 		
           public function SoundFx()
           {
-              
 		  }
 		  
 		  public function SoundPlayerHit():void{

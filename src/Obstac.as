@@ -5,6 +5,7 @@ package
 	 * ...
 	 * @author emedine
 	 */
+	import flash.utils.ByteArray;
 	import org.flixel.*;
 	import flash.net.*;
 	import flash.events.*;
@@ -26,7 +27,11 @@ package
 		private var theLevelID:Number = 0;
 		/// xml for the game data
 		private var xmlData:XML;
-		private var theXMLPath:String = "../data/worldMapData.xml";
+		
+		[Embed(source = '../data/worldMapData.xml', mimeType="application/octet-stream")]
+		public static const WorldMap:Class;
+		
+		//private var theXMLPath:String = "../data/worldMapData.xml";
 		
 		private var theXPos:XMLList;
 		private var theYPos:XMLList;
@@ -36,31 +41,13 @@ package
 		{
 
 			loadObstacData();
-
-			
-			
 		}
 		
-		 public function loadObstacData():void{
-			Debug.trace("import xml");
-			//// import xml
-			var xmlLoader:URLLoader = new URLLoader();
-			xmlLoader.addEventListener(Event.COMPLETE, parseWorldMapData);
-			Debug.trace("I am the path" + theXMLPath);
-
-			try {
-				xmlLoader.load(new URLRequest(theXMLPath));
-			} catch (e:Error) {
-				Debug.trace(e);
-			}
-			/// check for the current game level
+		 public function loadObstacData():void {
+			var data:ByteArray = (new WorldMap) as ByteArray;
+			var stringData:String = data.readUTFBytes(data.length);
+			xmlData = new XML(stringData);
 			
-			/// spawn the blocks accordingly
-				
-		}
-		
-		private function parseWorldMapData(e:Event):void{
-			xmlData = new XML(e.target.data);
 			numBoxes  = xmlData.worldData[theLevelID].block.length();
 			
 			theXPos = xmlData.worldData[theLevelID].block.@xPos;
@@ -77,8 +64,6 @@ package
 				theRock.y = theYPos[i];
 				add(theRock);
 			}
-			
-			
 		}
 		
 
